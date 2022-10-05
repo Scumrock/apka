@@ -1,0 +1,50 @@
+logging:
+  level:
+    ROOT: INFO
+    ru.tversu.apka: DEBUG
+
+spring:
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5432/apka
+    username: apka
+    password: apka
+    name: apka-prod-database
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+      maximum-pool-size: 10
+      driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQL10Dialect
+      hibernate.show_sql: false
+      hibernate.format_sql: false
+      hibernate.query.plan_parameter_metadata_max_size: 2000
+      hibernate.query.plan_cache_max_size: 20000
+      hibernate.hbm2ddl.auto: validate
+      hibernate.id.new_generator_mappings: true
+      hibernate.connection.provider_disables_autocommit: true
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
+      hibernate.jdbc.time_zone: UTC
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    show-sql: false
+  liquibase:
+    enabled: true
+
+server:
+  port: 8080
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
+    min-response-size: 1024

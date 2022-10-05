@@ -1,0 +1,66 @@
+logging:
+  level:
+    ROOT: INFO
+    ru.tversu.apka: INFO
+  pattern:
+    console: "%boldGreen(%d{yyyy-MM-dd}) | %boldBlue(%d{HH:mm:ss.SSS}) | %highlight(%-5level) | %cyan(%-20.20thread) | %-25.25logger{25} | %-25.25method{25}  | %m%xEx{full}%n"
+
+spring:
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:h2:mem:testdb:security_permission;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    name: apka-test-database
+    driver-class-name: org.h2.Driver
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+      maximum-pool-size: 10
+      max-lifetime: 600000
+      driver-class-name: org.h2.Driver
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+    enabled: true
+    contexts: prod
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate.dialect: org.hibernate.dialect.H2Dialect
+      hibernate.show_sql: false
+      hibernate.format_sql: false
+      hibernate.query.plan_parameter_metadata_max_size: 2000
+      hibernate.query.plan_cache_max_size: 20000
+      hibernate.hbm2ddl.auto: validate
+      hibernate.id.new_generator_mappings: true
+      hibernate.connection.provider_disables_autocommit: true
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
+      hibernate.jdbc.time_zone: UTC
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: false
+
+server:
+  port: 8080
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
+    min-response-size: 1024
+  tomcat:
+    max-connections: 20000
+    threads:
+      min-spare: 20
+      max: 400
+
+# ===================================================================
+# Application specific properties
+# ===================================================================
+
+# application:

@@ -1,0 +1,15 @@
+version: "3.4"
+services:
+  postgres:
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
+    image: rgordeev/postgres:${TAG}
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - VERSION=${TAG}
+    image: rgordeev/apka:${TAG}
