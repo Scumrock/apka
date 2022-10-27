@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.tversu.apka.model.Application;
@@ -37,5 +39,11 @@ public class ApplicationController {
   public ResponseEntity<Optional<Application>> getApplications(@PathVariable(name = "id") UUID id) {
     Optional<Application> application = applicationRepository.findById(id);
     return ResponseEntity.ok(application);
+  }
+
+  @PostMapping(path = "/applications", consumes = "application/json", produces = "application/json")
+  public ResponseEntity<Application> createApplication(@RequestBody Application application) {
+    Application response = applicationRepository.save(application);
+    return ResponseEntity.ok(response);
   }
 }
