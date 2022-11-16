@@ -8,7 +8,7 @@
       <column name="id" type="UUID">
         <constraints nullable="false" primaryKey="true" primaryKeyName="commentPK"/>
       </column>
-      <column name="payload" type="TEXT"/>
+      <column name="payload" type="${clobType}"/>
       <column name="application_id" type="UUID">
         <constraints nullable="false"/>
       </column>
