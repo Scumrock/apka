@@ -1,6 +1,17 @@
 plugins {
-	id 'org.springframework.boot' version '2.7.4'
-	id 'io.spring.dependency-management' version '1.0.14.RELEASE'
+	id 'org.springframework.boot' version "${springBootVersion}"
+	id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
+	id 'com.gorylenko.gradle-git-properties' version "${gitPropertiesPluginVersion}"
+	id 'org.openapi.generator' version "${openapiPluginVersion}"
+	id 'com.github.node-gradle.node' version "${gradleNodePluginVersion}"
+	id 'org.liquibase.gradle' version "${liquibasePluginVersion}"
+	id 'org.sonarqube' version "${sonarqubePluginVersion}"
+	id "io.spring.nohttp" version "${noHttpCheckstyleVersion}"
+	id 'com.github.andygoossens.gradle-modernizer-plugin' version "${modernizerPluginVersion}"
+
+	id 'checkstyle'
+	id 'jacoco'
+
 	id 'java'
 }
 
@@ -15,21 +26,127 @@ configurations {
 }
 
 repositories {
+	mavenLocal()
 	mavenCentral()
+	flatDir {
+		dirs 'libs'
+	}
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	compileOnly "org.projectlombok:lombok"
+	annotationProcessor "org.projectlombok:lombok"
+	testCompileOnly "org.projectlombok:lombok"
+	testAnnotationProcessor "org.projectlombok:lombok"
+
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+	// Spring Boot Libraries
+	implementation "org.springframework.boot:spring-boot-starter-actuator"
+	implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+	implementation "org.springframework.boot:spring-boot-starter-jdbc"
+	implementation "org.springframework.boot:spring-boot-starter-web"
+
+	implementation "org.liquibase:liquibase-core"
+	implementation "com.mattbertolini:liquibase-slf4j:4.1.0"
+
+
+	implementation "io.minio:minio:${minioSdkVersion}"
+	implementation "com.jlefebure:spring-boot-starter-minio:${springBootStarterMinioVersion}"
+
+	implementation "org.springframework.boot:spring-boot-properties-migrator"
+	runtimeOnly "org.springframework.boot:spring-boot-devtools"
+
+	// OpenAPI 2.0
+	implementation "org.springdoc:springdoc-openapi-ui:${springDocVersion}"
+
+	// Connection pooling, postgresql, hibernate libraries
+	implementation("com.zaxxer:HikariCP")
+	implementation "org.postgresql:postgresql"
+	implementation "org.hibernate:hibernate-core"
+	implementation "org.hibernate.validator:hibernate-validator"
+
+	// Jackson
+	implementation "com.fasterxml.jackson.core:jackson-annotations"
+	implementation "com.fasterxml.jackson.core:jackson-databind"
+	implementation "com.fasterxml.jackson.core:jackson-core"
+	implementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8"
+	implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+	implementation "com.fasterxml.jackson.datatype:jackson-datatype-joda"
+	implementation "com.fasterxml.jackson.module:jackson-module-jaxb-annotations"
+
+	implementation 'org.aspectj:aspectjweaver'
+	implementation 'org.aspectj:aspectjrt'
+	implementation 'org.slf4j:slf4j-api'
+	implementation 'org.slf4j:jcl-over-slf4j'
+	implementation 'ch.qos.logback:logback-classic'
+	implementation 'ch.qos.logback:logback-core'
+
+	implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
+	implementation "commons-io:commons-io:${commonsIoVersion}"
+	implementation "org.zalando:problem-spring-web:0.27.0"
+	implementation "org.apache.tika:tika-core:${tikaVersion}"
+	implementation "com.drewnoakes:metadata-extractor:2.18.0"
+
+	testImplementation "org.springframework.boot:spring-boot-starter-test"
+	testImplementation "com.h2database:h2"
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+compileJava.dependsOn(processResources)
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+// set up jacoco coverage rules
+jacocoTestCoverageVerification {
+	executionData test
+	violationRules {
+		rule {
+			limit {
+				minimum = 0.0
+			}
+		}
+	}
+}
+
+// set up jacoco coverate metrics
+jacocoTestReport {
+	executionData test
+}
+
+build.dependsOn jacocoTestCoverageVerification, jacocoTestReport
+
+wrapper {
+	gradleVersion = "7.5"
+}
+
+defaultTasks "clean", "build"
+
+modernizer {
+	failOnViolations = true
+	includeTestClasses = true
+}
+
+gitProperties {
+	failOnNoGitDirectory = false
+	keys = ["git.branch", "git.commit.id.abbrev", "git.commit.id.describe"]
+}
+
+checkstyle {
+	toolVersion "${checkstyleVersion}"
+	configFile file("checkstyle.xml")
+	maxWarnings = 10
+	ignoreFailures = false
+	checkstyleTest.enabled = false
+	checkstyleMain.enabled = false
+}
+
+nohttp {
+	source.include "build.gradle", "README.md"
 }

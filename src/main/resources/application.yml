@@ -1,0 +1,165 @@
+# ===================================================================
+# Spring Boot configuration.
+#
+# This configuration will be overridden by the Spring profile you use,
+# for example application-dev.yml if you use the "dev" profile.
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+management:
+  endpoints:
+    web:
+      base-path: /management
+      exposure:
+        include: [ 'configprops', 'env', 'health', 'info', 'logfile', 'loggers', 'metrics', 'prometheus', 'threaddump' ]
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+  info:
+    git:
+      mode: full
+  health:
+    mail:
+      enabled: false # When using the MailService, configure an SMTP server and set this to true
+  metrics:
+    export:
+      # Prometheus is the default metrics backend
+      prometheus:
+        enabled: true
+        step: 60
+    enable:
+      http: true
+      jvm: true
+      logback: true
+      process: true
+      system: true
+    distribution:
+      percentiles-histogram:
+        all: true
+      percentiles:
+        all: 0, 0.5, 0.75, 0.95, 0.99, 1.0
+      sla:
+        method:
+          timed: 50ms,100ms,500ms,1000ms,5000ms,10000ms,50000ms,100000ms,500000ms,1000000ms
+    tags:
+      application: ${spring.application.name}
+    web:
+      server:
+        request:
+          autotime:
+            enabled: true
+
+spring:
+  application:
+    name: apka
+  profiles:
+    # The commented value for `active` can be replaced with valid Spring profiles to load.
+    # Otherwise, it will be filled in by maven when building the JAR file
+    # Either way, it can be overridden by `--spring.profiles.active` value passed in the commandline or `-Dspring.profiles.active` set in `JAVA_OPTS`
+    active: ${SPRING_PROFILES_ACTIVE} #spring.profiles.active#
+  jmx:
+    default-domain: ${spring.application.name}
+    enabled: true
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: deferred
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQL10Dialect
+      hibernate.jdbc.time_zone: UTC
+      hibernate.hbm2ddl.auto: validate
+      hibernate.id.new_generator_mappings: true
+      hibernate.connection.provider_disables_autocommit: true
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
+      # modify batch size as necessary
+      hibernate.jdbc.batch_size: 25
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+      hibernate.show_sql: false
+      hibernate.format_sql: false
+      hibernate.query.plan_parameter_metadata_max_size: 2000
+      hibernate.query.plan_cache_max_size: 20000
+    hibernate:
+      ddl-auto: validate
+      use-new-id-generator-mappings: true
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+  task:
+    execution:
+      thread-name-prefix: apka-executor-
+      pool:
+        core-size: 10
+        max-size: 20
+        queue-capacity: 10000
+    scheduling:
+      thread-name-prefix: apka-scheduling-
+      pool:
+        size: 5
+  liquibase:
+    enabled: false
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+  messages:
+    basename: i18n/messages
+  main:
+    allow-bean-definition-overriding: false
+    allow-circular-references: true
+  mvc:
+    throw-exception-if-no-handler-found: true
+  thymeleaf:
+    mode: HTML
+  output:
+    ansi:
+      console-available: true
+  servlet:
+    multipart:
+      max-file-size: 10485760
+      max-request-size: 20971520
+      file-size-threshold: 0
+      location: /tmp
+  minio:
+    # Minio Host
+    url: http://minio.backend:9000
+    # Minio Bucket name for your application
+    bucket: storage
+    # Minio access key (login)
+    access-key: minio
+    # Minio secret key (password)
+    secret-key: minio123
+
+server:
+  error:
+    include-exception: false
+    include-stacktrace: never
+  servlet:
+    session:
+      cookie:
+        http-only: true
+    encoding:
+      force: true
+  undertow:
+    max-http-post-size: 20971520
+
+# Properties to be exposed on the /info management endpoint
+info:
+  # Comma separated list of profiles that will trigger the ribbon to show
+  display-ribbon-on-profiles: 'dev'
+
+# ===================================================================
+# Application specific properties
+# ===================================================================
+application:
+  apka:
+    mime-types-filter:
+      allowed: ${EXTENSIONS_ALLOWED_BY_STORAGE}

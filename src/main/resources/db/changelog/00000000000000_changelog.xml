@@ -1,0 +1,28 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+  <changeSet author="rgordeev (generated)" id="1664982304-1">
+    <createTable tableName="objects">
+      <column name="object_id" type="${uuidType}">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="pk_objects"/>
+      </column>
+      <column name="created" type="TIMESTAMP WITHOUT TIME ZONE"/>
+      <column name="extension" type="VARCHAR(255)"/>
+      <column name="file_name" type="${clobType}"/>
+      <column name="file_type" type="VARCHAR(255)"/>
+      <column name="length" type="BIGINT"/>
+      <column name="mime_type" type="VARCHAR(255)"/>
+      <column name="original_name" type="${clobType}"/>
+      <column name="updated" type="TIMESTAMP WITHOUT TIME ZONE"/>
+      <column name="url" type="${clobType}"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet author="rgordeev (generated)" id="1664982304-2">
+    <addUniqueConstraint columnNames="object_id" constraintName="uc_objects_object_id"
+                         tableName="objects"/>
+  </changeSet>
+
+</databaseChangeLog>
