@@ -2,6 +2,7 @@ package ru.tversu.apka.model;
 
 import java.time.ZonedDateTime;
 import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +25,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Accessors(chain = true)
 public class Application {
   @Id
-  @Column(name = "id", unique = true, updatable = false, nullable = false)
+  @Column(name = "id", updatable = false, nullable = false)
   private UUID id = UUID.randomUUID();
 
   @Column(name = "title", columnDefinition = "varchar[1000]")
@@ -67,5 +68,12 @@ public class Application {
   @Override
   public int hashCode() {
     return Objects.hash(id);
+  }
+
+  @Override
+  public String toString() {
+    return new StringJoiner(", ", Application.class.getSimpleName() + "[", "]")
+        .add("id=" + id)
+        .toString();
   }
 }

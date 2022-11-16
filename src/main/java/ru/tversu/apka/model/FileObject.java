@@ -2,6 +2,7 @@ package ru.tversu.apka.model;
 
 import java.time.ZonedDateTime;
 import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +22,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Accessors(chain = true)
 public class FileObject {
   @Id
-  @Column(name = "object_id", unique = true, updatable = false, nullable = false)
+  @Column(name = "object_id", updatable = false, nullable = false)
   private UUID objectId = UUID.randomUUID();
 
   @Column(name = "url", columnDefinition = "TEXT")
@@ -72,18 +73,9 @@ public class FileObject {
 
   @Override
   public String toString() {
-    return "FileStorageItem{" +
-        "objectId=" + objectId +
-        ", url='" + url + '\'' +
-        ", fileName='" + fileName + '\'' +
-        ", fileType='" + fileType + '\'' +
-        ", mimeType='" + mimeType + '\'' +
-        ", extension='" + extension + '\'' +
-        ", originalName='" + originalName + '\'' +
-        ", length=" + length +
-        ", created=" + created +
-        ", updated=" + updated +
-        '}';
+    return new StringJoiner(", ", FileObject.class.getSimpleName() + "[", "]")
+        .add("objectId=" + objectId)
+        .toString();
   }
 }
 
