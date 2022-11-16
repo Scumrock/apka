@@ -38,13 +38,13 @@ if (!project.hasProperty("runList")) {
 project.ext.diffChangelogFile = "src/main/resources/config/liquibase/changelog/" + new Date().format("yyyyMMddHHmmss") + "_changelog.xml"
 
 if (!project.hasProperty("targetUrl")) {
-	project.ext.targetUrl = "jdbc:postgresql://localhost:5432/kernel"
+	project.ext.targetUrl = "jdbc:postgresql://localhost:5432/apka"
 }
 if (!project.hasProperty("targetUsername")) {
-	project.ext.targetUsername = "kernel"
+	project.ext.targetUsername = "apka"
 }
 if (!project.hasProperty("targetPassword")) {
-	project.ext.targetPassword = "kernel"
+	project.ext.targetPassword = "apka"
 }
 if (!project.hasProperty("referenceUrl")) {
 	project.ext.referenceUrl = "hibernate:spring:ru.amethyst.kernel.domain?dialect=tech.jhipster.domain.util.FixedPostgreSQL10Dialect&hibernate.show_sql=true&hibernate.enhanced_id=true&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
