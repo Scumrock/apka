@@ -5,7 +5,11 @@ import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +35,11 @@ public class Application {
 
   @Column(name = "size")
   private long size;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "article_id", referencedColumnName = "objectId",
+      foreignKey = @ForeignKey(name = "fk_application_file_object_id"))
+  private FileObject fileObject;
 
   @CreationTimestamp
   @Column(name = "created")

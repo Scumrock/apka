@@ -15,9 +15,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name = "objects", uniqueConstraints = {
-    @UniqueConstraint(name = "uc_objects_object_id", columnNames = {"object_id"})
-})
+@Table(name = "objects")
 @Getter
 @Setter
 @Accessors(chain = true)
