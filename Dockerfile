@@ -1,6 +1,5 @@
 FROM bellsoft/liberica-openjdk-alpine:17
 
-RUN echo "https://nexus.rt.ru/repository/alpine-3.16/" > /etc/apk/repositories
 ENV TZ=Europe/Moscow
 RUN apk --no-cache add curl tzdata \
     && cp /usr/share/zoneinfo/$TZ /etc/localtime \
