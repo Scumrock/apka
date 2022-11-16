@@ -47,7 +47,7 @@ if (!project.hasProperty("targetPassword")) {
 	project.ext.targetPassword = "apka"
 }
 if (!project.hasProperty("referenceUrl")) {
-	project.ext.referenceUrl = "hibernate:spring:ru.amethyst.kernel.domain?dialect=tech.jhipster.domain.util.FixedPostgreSQL10Dialect&hibernate.show_sql=true&hibernate.enhanced_id=true&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
+	project.ext.referenceUrl = "hibernate:spring:ru.tversu.apka.model?dialect=org.hibernate.dialect.PostgreSQL10Dialect&hibernate.show_sql=true&hibernate.enhanced_id=true&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
 }
 
 liquibase {
