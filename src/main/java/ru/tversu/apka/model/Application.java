@@ -37,7 +37,7 @@ public class Application {
   private long size;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "article_id", referencedColumnName = "objectId",
+  @JoinColumn(name = "article_id", referencedColumnName = "object_id",
       foreignKey = @ForeignKey(name = "fk_application_file_object_id"))
   private FileObject fileObject;
 
