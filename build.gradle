@@ -8,10 +8,8 @@ plugins {
 	id 'org.sonarqube' version "${sonarqubePluginVersion}"
 	id "io.spring.nohttp" version "${noHttpCheckstyleVersion}"
 	id 'com.github.andygoossens.gradle-modernizer-plugin' version "${modernizerPluginVersion}"
-
 	id 'checkstyle'
 	id 'jacoco'
-
 	id 'java'
 }
 
@@ -33,11 +31,74 @@ repositories {
 	}
 }
 
+if (!project.hasProperty("runList")) {
+	project.ext.runList = "main"
+}
+
+project.ext.diffChangelogFile = "src/main/resources/db/changelog/" + new Date().format("yyyyMMddHHmmss") + "_changelog.xml"
+
+if (!project.hasProperty("targetUrl")) {
+	project.ext.targetUrl = "jdbc:postgresql://localhost:5432/apka"
+}
+if (!project.hasProperty("targetUsername")) {
+	project.ext.targetUsername = "apka"
+}
+if (!project.hasProperty("targetPassword")) {
+	project.ext.targetPassword = "apka"
+}
+if (!project.hasProperty("referenceUrl")) {
+	project.ext.referenceUrl = "hibernate:spring:ru.tversu.apka.model?dialect=org.hibernate.dialect.PostgreSQL10Dialect&hibernate.show_sql=true&hibernate.enhanced_id=true&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
+}
+
+liquibase {
+	activities {
+		main {
+			driver "org.postgresql.Driver"
+			url project.ext.targetUrl
+			username project.ext.targetUsername
+			password project.ext.targetPassword
+			changeLogFile "db/changelog/db.changelog-master.xml"
+			defaultSchemaName ""
+			classpath "${project.projectDir}/src/main/resources/"
+			logLevel "debug"
+		}
+		diffLog {
+			driver "org.postgresql.Driver"
+			url project.ext.targetUrl
+			username project.ext.targetUsername
+			password project.ext.targetPassword
+			changeLogFile project.ext.diffChangelogFile
+			referenceUrl project.ext.referenceUrl
+			defaultSchemaName ""
+			logLevel "debug"
+			classpath "$buildDir/classes/java/main"
+			excludeObjects "oauth_access_token, oauth_approvals, oauth_client_details, oauth_client_token, oauth_code, oauth_refresh_token"
+		}
+	}
+
+	runList = project.ext.runList
+}
+
+configurations {
+	providedRuntime
+	implementation.exclude module: "spring-boot-starter-tomcat"
+	all {
+		resolutionStrategy {
+			// Inherited version from Spring Boot can't be used because of regressions:
+			// To be removed as soon as spring-boot use the same version
+			force "org.liquibase:liquibase-core:${liquibaseCoreVersion}"
+		}
+	}
+}
+
 dependencies {
 	compileOnly "org.projectlombok:lombok"
 	annotationProcessor "org.projectlombok:lombok"
 	testCompileOnly "org.projectlombok:lombok"
 	testAnnotationProcessor "org.projectlombok:lombok"
+
+	implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+	annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
@@ -46,10 +107,10 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa"
 	implementation "org.springframework.boot:spring-boot-starter-jdbc"
 	implementation "org.springframework.boot:spring-boot-starter-web"
+	implementation "org.springframework.boot:spring-boot-starter-undertow"
 
-	implementation "org.liquibase:liquibase-core"
-	implementation "com.mattbertolini:liquibase-slf4j:4.1.0"
-
+	implementation "org.liquibase:liquibase-core:${liquibaseHibernate5Version}"
+	liquibaseRuntime "org.liquibase:liquibase-core:${liquibaseHibernate5Version}"
 
 	implementation "io.minio:minio:${minioSdkVersion}"
 	implementation "com.jlefebure:spring-boot-starter-minio:${springBootStarterMinioVersion}"
@@ -65,6 +126,7 @@ dependencies {
 	implementation "org.postgresql:postgresql"
 	implementation "org.hibernate:hibernate-core"
 	implementation "org.hibernate.validator:hibernate-validator"
+	annotationProcessor "org.hibernate:hibernate-jpamodelgen:${hibernateVersion}"
 
 	// Jackson
 	implementation "com.fasterxml.jackson.core:jackson-annotations"
@@ -87,6 +149,11 @@ dependencies {
 	implementation "org.zalando:problem-spring-web:0.27.0"
 	implementation "org.apache.tika:tika-core:${tikaVersion}"
 	implementation "com.drewnoakes:metadata-extractor:2.18.0"
+
+	liquibaseRuntime sourceSets.main.compileClasspath
+	liquibaseRuntime "org.liquibase.ext:liquibase-hibernate5:${liquibaseHibernate5Version}"
+	liquibaseRuntime "info.picocli:picocli:4.7.0"
+	liquibaseRuntime "org.postgresql:postgresql"
 
 	testImplementation "org.springframework.boot:spring-boot-starter-test"
 	testImplementation "com.h2database:h2"

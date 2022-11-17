@@ -1,0 +1,40 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet author="rgordeev (generated)" id="1668628130319-1">
+    <createTable tableName="comment">
+      <column name="id" type="UUID">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="commentPK"/>
+      </column>
+      <column name="payload" type="${clobType}"/>
+      <column name="application_id" type="UUID">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+  <changeSet author="rgordeev (generated)" id="1668628130319-2">
+    <addColumn tableName="application">
+      <column name="file_object_id" type="uuid"/>
+    </addColumn>
+  </changeSet>
+
+  <changeSet author="rgordeev (generated)" id="1668628130319-3">
+    <addForeignKeyConstraint baseColumnNames="file_object_id" baseTableName="application"
+                             constraintName="fk_application_file_object_id" deferrable="false"
+                             initiallyDeferred="false" referencedColumnNames="object_id"
+                             referencedTableName="objects" validate="true"/>
+  </changeSet>
+
+  <changeSet author="rgordeev (generated)" id="1668628130319-4">
+    <addForeignKeyConstraint baseColumnNames="application_id" baseTableName="comment"
+                             constraintName="fk_comment_application_id" deferrable="false" initiallyDeferred="false"
+                             referencedColumnNames="id" referencedTableName="application" validate="true"/>
+  </changeSet>
+
+  <changeSet author="rgordeev (generated)" id="1668628130319-5">
+    <dropUniqueConstraint constraintName="uc_objects_object_id" tableName="objects"/>
+  </changeSet>
+</databaseChangeLog>
