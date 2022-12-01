@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 public class CommentDTO {
 
-  private UUID id;
+  private Long id;
 
   private String payload;
 

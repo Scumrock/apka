@@ -1,0 +1,27 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet author="rgordeev (generated)" id="1669840758272-1">
+    <createSequence incrementBy="50" sequenceName="sequence_generator" startValue="1"/>
+  </changeSet>
+
+  <changeSet author="rgordeev (generated)" id="1669840758272-2">
+    <dropPrimaryKey tableName="comment"/>
+    <dropColumn tableName="comment" columnName="id"/>
+  </changeSet>
+
+  <changeSet author="rgordeev (generated)" id="1669840758272-3">
+    <addColumn tableName="comment">
+      <column name="id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  </changeSet>
+
+  <changeSet author="rgordeev (generated)" id="1669840758272-4">
+    <addPrimaryKey tableName="comment" columnNames="id"/>
+  </changeSet>
+
+</databaseChangeLog>
