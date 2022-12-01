@@ -36,7 +36,7 @@ public class CommentMapperUtil {
    */
   @ApplicationDTOByComment
   public Application findAttachmentsByComment(UUID applicationId) {
-    return applicationRepository.findById(applicationId).orElse(null);
+    return applicationRepository.getReferenceById(applicationId);
   }
 
   /**
