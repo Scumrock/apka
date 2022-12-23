@@ -4,9 +4,9 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
   <changeSet author="rgordeev (generated)" id="1669840758272-1">
-    <createSequence incrementBy="50" sequenceName="sequence_generator" startValue="1"/>
+    <createSequence incrementBy="50" sequenceName="sequence_generator" startValue="1050"/>
   </changeSet>
-
+  
   <changeSet author="rgordeev (generated)" id="1669840758272-2">
     <dropPrimaryKey tableName="comment"/>
     <dropColumn tableName="comment" columnName="id"/>

@@ -2,7 +2,7 @@ package ru.tversu.apka.vm;
 
 import java.net.URI;
 import java.util.Optional;
-import ru.tversu.apka.model.FileObject;
+import ru.tversu.apka.domain.FileObject;
 import ru.tversu.apka.problem.UploadFileProblem;
 
 public class UploadResponseBuilder {

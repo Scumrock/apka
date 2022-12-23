@@ -1,14 +1,14 @@
 package ru.tversu.apka.service.mapper;
 
 /**
- * Mapper for the entity {@link ru.tversu.apka.model.Application} and its DTO {@link ru.tversu.apka.service.dto.ApplicationDTO}.
+ * Mapper for the entity {@link ru.tversu.apka.domain.Application} and its DTO {@link ru.tversu.apka.service.dto.ApplicationDTO}.
  */
 
 import static org.mapstruct.NullValueCheckStrategy.ALWAYS;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import ru.tversu.apka.model.Application;
+import ru.tversu.apka.domain.Application;
 import ru.tversu.apka.service.dto.ApplicationDTO;
 
 @Mapper(unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE,

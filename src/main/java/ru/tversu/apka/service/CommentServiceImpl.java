@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tversu.apka.model.Comment;
+import ru.tversu.apka.domain.Comment;
 import ru.tversu.apka.repository.ApplicationRepository;
 import ru.tversu.apka.repository.CommentRepository;
 import ru.tversu.apka.service.dto.CommentDTO;

@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
-import ru.tversu.apka.model.FileObject;
+import ru.tversu.apka.domain.FileObject;
 
 public interface FileObjectService {
 

@@ -3,7 +3,7 @@ package ru.tversu.apka.service.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
-import ru.tversu.apka.model.FileObject;
+import ru.tversu.apka.domain.FileObject;
 import ru.tversu.apka.service.dto.FileObjectDTO;
 
 /**

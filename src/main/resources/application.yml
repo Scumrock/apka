@@ -160,6 +160,30 @@ info:
 # Application specific properties
 # ===================================================================
 application:
-  apka:
-    mime-types-filter:
-      allowed: ${EXTENSIONS_ALLOWED_BY_STORAGE}
+  clientApp:
+    name: 'apka'
+  # By default CORS is disabled. Uncomment to enable.
+  # cors:
+  #   allowed-origins: "http://localhost:8100,http://localhost:9000"
+  #   allowed-methods: "*"
+  #   allowed-headers: "*"
+  #   exposed-headers: "Link,X-Total-Count,X-${application.clientApp.name}-alert,X-${application.clientApp.name}-error,X-${application.clientApp.name}-params"
+  #   allow-credentials: true
+  #   max-age: 1800
+  mail:
+    from: simpleauth@localhost
+  api-docs:
+    default-include-pattern: ${server.servlet.context-path:}/api/**
+    management-include-pattern: ${server.servlet.context-path:}/management/**
+    title: Apka API
+    description: Apka API documentation
+    version: 0.0.1
+    terms-of-service-url:
+    contact-name:
+    contact-url:
+    contact-email:
+    license: unlicensed
+    license-url:
+  security:
+  mime-types-filter:
+    allowed: ${EXTENSIONS_ALLOWED_BY_STORAGE}

@@ -8,7 +8,7 @@ import java.util.UUID;
 import org.mapstruct.Qualifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.tversu.apka.model.Application;
+import ru.tversu.apka.domain.Application;
 import ru.tversu.apka.repository.ApplicationRepository;
 
 /**
