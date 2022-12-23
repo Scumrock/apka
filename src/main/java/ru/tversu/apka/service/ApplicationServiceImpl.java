@@ -7,7 +7,7 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tversu.apka.model.Application;
+import ru.tversu.apka.domain.Application;
 import ru.tversu.apka.repository.ApplicationRepository;
 import ru.tversu.apka.service.dto.ApplicationDTO;
 import ru.tversu.apka.service.mapper.ApplicationMapper;

@@ -28,6 +28,8 @@ spring:
     change-log: classpath:/db/changelog/db.changelog-master.xml
     enabled: true
     contexts: prod
+  mail:
+    host: localhost
   jpa:
     hibernate:
       ddl-auto: validate
@@ -63,4 +65,22 @@ server:
 # Application specific properties
 # ===================================================================
 
-# application:
+application:
+  clientApp:
+    name: 'simpleauthApp'
+  mail:
+    from: simpleauth@localhost.com
+    base-url: http://127.0.0.1:8080
+  logging:
+    # To test json console appender
+    use-json-format: false
+    logstash:
+      enabled: false
+      host: localhost
+      port: 5000
+      queue-size: 512
+  security:
+    remember-me:
+      # security key (this key should be unique for your application, and kept secret)
+      key: 244dcd52fe6a27770d6eeb33b8abbffbf065ad5ad915225707750da43df8f7c583b8eb6133a55264ab881e91d9580369ed01
+

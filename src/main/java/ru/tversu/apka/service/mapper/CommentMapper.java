@@ -2,7 +2,7 @@ package ru.tversu.apka.service.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import ru.tversu.apka.model.Comment;
+import ru.tversu.apka.domain.Comment;
 import ru.tversu.apka.service.dto.CommentDTO;
 
 /** Mapper for the entity {@link Comment} and its DTO {@link CommentDTO}. */
