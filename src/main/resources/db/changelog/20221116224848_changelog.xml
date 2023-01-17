@@ -8,6 +8,7 @@
       <column name="id" type="UUID">
         <constraints nullable="false" primaryKey="true" primaryKeyName="commentPK"/>
       </column>
+      <column name="created" type="TIMESTAMP WITHOUT TIME ZONE"/>
       <column name="payload" type="${clobType}"/>
       <column name="application_id" type="UUID">
         <constraints nullable="false"/>

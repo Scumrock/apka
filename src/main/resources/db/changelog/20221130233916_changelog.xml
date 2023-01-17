@@ -14,7 +14,7 @@
 
   <changeSet author="rgordeev (generated)" id="1669840758272-3">
     <addColumn tableName="comment">
-      <column name="id" type="bigint">
+      <column name="id" type="${uuidType}">
         <constraints nullable="false"/>
       </column>
     </addColumn>

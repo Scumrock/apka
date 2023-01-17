@@ -1,20 +1,21 @@
 package ru.tversu.apka.service;
 
+import ru.tversu.apka.domain.Application;
+import ru.tversu.apka.service.dto.ApplicationDTO;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import ru.tversu.apka.service.dto.ApplicationDTO;
 
 public interface ApplicationService {
-  ApplicationDTO create(ApplicationDTO applicationDTO);
+    Application saveApplication(ApplicationDTO applicationDTO);
+    Application updateApplication(ApplicationDTO applicationDTO, UUID id);
+    List<Application> allApplications();
+    Optional<Application> getApplication(UUID id);
+    void deleteApplication(UUID id);
 
-  ApplicationDTO update(ApplicationDTO applicationDTO);
 
-  Optional<ApplicationDTO> patch(ApplicationDTO applicationDTO);
 
-  void delete(UUID id);
 
-  Optional<ApplicationDTO> findOne(UUID id);
 
-  List<ApplicationDTO> listAll();
 }

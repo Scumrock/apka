@@ -7,4 +7,5 @@ import ru.tversu.apka.domain.Application;
 
 @Repository
 public interface ApplicationRepository extends JpaRepository<Application, UUID> {
+
 }

@@ -8,8 +8,6 @@ import lombok.Setter;
 @Setter
 public class ApplicationDTO {
 
-  private UUID id;
-
   private String title;
 
   private String description;

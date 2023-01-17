@@ -1,4 +1,4 @@
-package ru.tversu.apka.service;
+package ru.tversu.apka.service.impl;
 
 import com.jlefebure.spring.boot.minio.MinioService;
 import io.minio.StatObjectResponse;
@@ -28,6 +28,7 @@ import ru.tversu.apka.domain.FileObject;
 import ru.tversu.apka.problem.FileNotFoundProblem;
 import ru.tversu.apka.problem.WrongMimeTypeProblem;
 import ru.tversu.apka.repository.FileObjectRepository;
+import ru.tversu.apka.service.FileObjectService;
 import ru.tversu.apka.util.GuessType;
 
 @Service

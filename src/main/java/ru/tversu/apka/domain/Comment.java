@@ -1,7 +1,9 @@
 package ru.tversu.apka.domain;
 
+import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.StringJoiner;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +18,7 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "comment")
@@ -25,13 +28,15 @@ import lombok.experimental.Accessors;
 public class Comment {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-  @SequenceGenerator(name = "sequenceGenerator")
   @Column(name = "id", updatable = false, nullable = false)
-  private Long id;
+  private UUID id = UUID.randomUUID();
 
   @Column(name = "payload", columnDefinition = "text")
   private String payload;
+
+  @CreationTimestamp
+  @Column(name = "created")
+  private ZonedDateTime created;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "application_id", referencedColumnName = "id",
