@@ -13,9 +13,9 @@ public interface FileObjectService {
 
   List<String> IMAGE_MIMETYPES = Arrays.asList("image/jpeg", "image/png", "image/gif");
 
-  FileObject saveFile(MultipartFile multipartFile) throws Exception;
+  FileObject saveFile(MultipartFile multipartFile, Long userId) throws Exception;
 
-  Collection<FileObject> saveFiles(MultipartFile[] multipartFiles) throws Exception;
+  Collection<FileObject> saveFiles(MultipartFile[] multipartFiles, Long userId) throws Exception;
 
 //  FileObject saveFile(MultipartFile multipartFile, String oldFileName) throws Exception;
 
@@ -39,4 +39,5 @@ public interface FileObjectService {
   FileObject findFileObjectByUuid(String uuid, HttpServletRequest request)
       throws MalformedURLException;
 
+  void deleteFileObjectByUuid(String uuid, HttpServletRequest request) throws MalformedURLException;
 }

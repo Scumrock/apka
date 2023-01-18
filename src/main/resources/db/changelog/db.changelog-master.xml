@@ -25,5 +25,5 @@
   <include file="20221116224848_changelog.xml" relativeToChangelogFile="true"/>
   <include file="20221130233916_changelog.xml" relativeToChangelogFile="true"/>
   <include file="20221223170039_add_users.xml" relativeToChangelogFile="true"/>
-
+  <include file="add_new_column_in_fileObject.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

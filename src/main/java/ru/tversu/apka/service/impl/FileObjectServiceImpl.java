@@ -53,11 +53,12 @@ public class FileObjectServiceImpl implements FileObjectService {
   }
 
   @Override
-  public FileObject saveFile(MultipartFile multipartFile) throws Exception {
+  public FileObject saveFile(MultipartFile multipartFile, Long userId) throws Exception {
     try (BufferedInputStream bufferedInputStream = new BufferedInputStream(
         multipartFile.getInputStream())) {
 
       FileObject object = new FileObject();
+      object.setUserId(userId);
 
       String originalName = multipartFile.getOriginalFilename();
 
@@ -91,10 +92,10 @@ public class FileObjectServiceImpl implements FileObjectService {
   }
 
   @Override
-  public Collection<FileObject> saveFiles(MultipartFile[] multipartFiles) throws Exception {
+  public Collection<FileObject> saveFiles(MultipartFile[] multipartFiles, Long userId) throws Exception {
     Set<FileObject> fileObjects = new HashSet<>(multipartFiles.length);
     for (MultipartFile multipartFile : multipartFiles) {
-      fileObjects.add(saveFile(multipartFile));
+      fileObjects.add(saveFile(multipartFile, userId));
     }
     return fileObjects;
   }
@@ -175,5 +176,18 @@ public class FileObjectServiceImpl implements FileObjectService {
         .orElseThrow(() -> new FileNotFoundProblem(objectId, type));
 
   }
+
+  @Override
+  public void deleteFileObjectByUuid(String uuid, HttpServletRequest request) throws MalformedURLException {
+    if (uuid == null) {
+      throw new MalformedURLException("There should be uuid in GET /api/files/ request!");
+    }
+    final URI type = URI.create(request.getRequestURI());
+    final UUID objectId = UUID.fromString(uuid);
+    FileObject fileObject = fileObjectRepository.findById(objectId).orElseThrow(() -> new FileNotFoundProblem(objectId, type));
+    fileObjectRepository.delete(fileObject);
+
+  }
+
 
 }
